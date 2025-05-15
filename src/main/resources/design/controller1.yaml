@@ -1,0 +1,43 @@
+openapi: 3.0.1
+info:
+  title: Excel Upload and Download API
+  version: 1.0.0
+  description: API for uploading and downloading Excel files.
+paths:
+  /excel/upload:
+    post:
+      tags:
+        - planner
+      summary: Upload an Excel file
+      operationId: uploadExcel
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File uploaded successfully
+        '400':
+          description: Bad request or invalid file
+  /excel/download:
+    get:
+      tags:
+        - planner
+      summary: Download an Excel file
+      operationId: downloadExcel
+      responses:
+        '200':
+          description: Excel file downloaded
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: File not found
